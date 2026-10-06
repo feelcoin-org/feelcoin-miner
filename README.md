@@ -170,6 +170,31 @@ Then start:
 
 Direct daemon solo mining has **0% pool fee**.
 
+### Custom daemon address
+
+By default, `--solo` connects to the local Feelcoin daemon at:
+
+```text
+127.0.0.1:35781
+```
+
+To mine through a Feelcoin daemon running at another address or port:
+
+```bash
+./feelcoin-miner --daemon --url YOUR_DAEMON_IP:35781 --wallet YOUR_FEELCOIN_WALLET_ADDRESS
+```
+
+Example on a private network:
+
+```bash
+./feelcoin-miner --daemon --url 192.168.1.123:8197 --wallet YOUR_FEELCOIN_WALLET_ADDRESS
+```
+
+`-o` is intended for pool / Stratum connections. For direct daemon mining, use `--daemon --url`.
+
+For security, do not expose the daemon RPC port directly to the public Internet.
+
+
 ## Build from Source
 
 Install the build dependencies on Ubuntu:
