@@ -1,0 +1,14 @@
+Feelcoin Miner
+==============
+
+Feelcoin-specific modifications:
+Copyright (C) 2026 Feelcoin Project
+
+Based on XMRig:
+https://github.com/xmrig/xmrig
+
+XMRig copyright notices, source headers, third-party notices,
+and the GNU General Public License are retained.
+
+Feelcoin Miner is distributed under the GNU General Public License,
+version 3 or later.
