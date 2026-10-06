@@ -33,6 +33,7 @@ public:
     enum Id : uint32_t {
         INVALID,
         MONERO,
+        FEELCOIN,
         SUMO,
         ARQMA,
         GRAFT,

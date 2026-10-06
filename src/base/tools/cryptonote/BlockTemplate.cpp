@@ -263,6 +263,13 @@ bool xmrig::BlockTemplate::parse(bool hashes)
             return false;
         }
     }
+    else if (m_coin == Coin::FEELCOIN) {
+        const uint64_t expected_outputs = (m_height >= 590) ? 2 : 1;
+
+        if (m_numOutputs != expected_outputs) {
+            return false;
+        }
+    }
     else if (m_numOutputs != 1) {
         return false;
     }
@@ -319,8 +326,41 @@ bool xmrig::BlockTemplate::parse(bool hashes)
             ar(view_tag2);
         }
     }
-    else if (m_outputType == 3) {
-        ar(m_viewTag);
+    else {
+        if (m_outputType == 3) {
+            ar(m_viewTag);
+        }
+
+        /*
+         * Feelcoin block 590+ coinbase layout:
+         *
+         *   output 0 -> miner
+         *   output 1 -> protocol treasury
+         *
+         * Reward construction remains entirely daemon-controlled.
+         * The miner only parses the second output so the complete
+         * miner transaction can be hashed and submitted unchanged.
+         */
+        if ((m_coin == Coin::FEELCOIN) && (m_numOutputs == 2)) {
+            uint64_t treasury_amount;
+            ar(treasury_amount);
+
+            uint8_t treasury_output_type;
+            ar(treasury_output_type);
+
+            if ((treasury_output_type != 2) &&
+                (treasury_output_type != 3)) {
+                return false;
+            }
+
+            Span treasury_key;
+            ar(treasury_key, kKeySize);
+
+            if (treasury_output_type == 3) {
+                uint8_t treasury_view_tag;
+                ar(treasury_view_tag);
+            }
+        }
     }
 
     if (m_coin == Coin::TOWNFORGE) {

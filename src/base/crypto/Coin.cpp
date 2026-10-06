@@ -47,6 +47,7 @@ struct CoinInfo
 static const CoinInfo coinInfo[] = {
     { Algorithm::INVALID,         nullptr,    nullptr,        0,      0,              nullptr },
     { Algorithm::RX_0,            "XMR",      "Monero",       120,    1000000000000,  YELLOW_BG_BOLD( WHITE_BOLD_S " monero  ") },
+    { Algorithm::RX_0,            "FEEL",     "Feelcoin",     120,    1000000000000,  YELLOW_BG_BOLD( WHITE_BOLD_S " feelcoin") },
     { Algorithm::CN_R,            "SUMO",     "Sumokoin",     240,    1000000000,     BLUE_BG_BOLD(   WHITE_BOLD_S " sumo    ") },
     { Algorithm::RX_ARQ,          "ARQ",      "ArQmA",        120,    1000000000,     BLUE_BG_BOLD(   WHITE_BOLD_S " arqma   ") },
     { Algorithm::RX_GRAFT,        "GRFT",     "Graft",        120,    10000000000,    BLUE_BG_BOLD(   WHITE_BOLD_S " graft   ") },
