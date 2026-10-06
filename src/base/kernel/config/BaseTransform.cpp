@@ -171,6 +171,76 @@ void xmrig::BaseTransform::transform(rapidjson::Document &doc, int key, const ch
         break;
     }
 
+    case IConfig::WalletKey: /* --wallet */
+    {
+        using namespace rapidjson;
+
+        if (!doc.HasMember(Pools::kPools)) {
+            doc.AddMember(StringRef(Pools::kPools), kArrayType, doc.GetAllocator());
+        }
+
+        Value &pools = doc[Pools::kPools];
+
+        if (pools.Empty()) {
+            pools.PushBack(kObjectType, doc.GetAllocator());
+        }
+
+        Value &pool = pools[pools.Size() - 1];
+
+        if (!pool.HasMember(Pool::kUrl)) {
+            set(doc, pool, Pool::kUrl, "pool.feelcoin.org:4244");
+            set(doc, pool, Pool::kTls, true);
+        }
+
+        if (!pool.HasMember(Pool::kCoin)) {
+            set(doc, pool, Pool::kCoin, "feelcoin");
+        }
+
+        if (!pool.HasMember(Pool::kAlgo)) {
+            set(doc, pool, Pool::kAlgo, "rx/0");
+        }
+
+        if (!pool.HasMember(Pool::kPass)) {
+            set(doc, pool, Pool::kPass, "x");
+        }
+
+        set(doc, pool, Pool::kUser, arg);
+        break;
+    }
+
+    case IConfig::WorkerKey: /* --worker */
+    {
+        using namespace rapidjson;
+
+        if (!doc.HasMember(Pools::kPools)) {
+            doc.AddMember(StringRef(Pools::kPools), kArrayType, doc.GetAllocator());
+        }
+
+        Value &pools = doc[Pools::kPools];
+
+        if (pools.Empty()) {
+            pools.PushBack(kObjectType, doc.GetAllocator());
+        }
+
+        Value &pool = pools[pools.Size() - 1];
+
+        if (!pool.HasMember(Pool::kUrl)) {
+            set(doc, pool, Pool::kUrl, "pool.feelcoin.org:4244");
+            set(doc, pool, Pool::kTls, true);
+        }
+
+        if (!pool.HasMember(Pool::kCoin)) {
+            set(doc, pool, Pool::kCoin, "feelcoin");
+        }
+
+        if (!pool.HasMember(Pool::kAlgo)) {
+            set(doc, pool, Pool::kAlgo, "rx/0");
+        }
+
+        set(doc, pool, Pool::kPass, arg);
+        break;
+    }
+
     case IConfig::UserKey: /* --user */
         return add(doc, Pools::kPools, Pool::kUser, arg);
 
@@ -258,6 +328,7 @@ void xmrig::BaseTransform::transform(rapidjson::Document &doc, int key, const ch
     case IConfig::HttpEnabledKey: /* --http-enabled */
     case IConfig::DaemonKey:      /* --daemon */
     case IConfig::SubmitToOriginKey: /* --submit-to-origin */
+    case IConfig::SoloKey:           /* --solo */
     case IConfig::VerboseKey:     /* --verbose */
     case IConfig::DnsIPv4Key:     /* --ipv4 */
     case IConfig::DnsIPv6Key:     /* --ipv6 */
@@ -288,6 +359,31 @@ void xmrig::BaseTransform::transformBoolean(rapidjson::Document &doc, int key, b
 
     case IConfig::TlsKey: /* --tls */
         return add(doc, Pools::kPools, Pool::kTls, enable);
+
+    case IConfig::SoloKey: /* --solo */
+    {
+        using namespace rapidjson;
+
+        if (!doc.HasMember(Pools::kPools)) {
+            doc.AddMember(StringRef(Pools::kPools), kArrayType, doc.GetAllocator());
+        }
+
+        Value &pools = doc[Pools::kPools];
+
+        if (pools.Empty()) {
+            pools.PushBack(kObjectType, doc.GetAllocator());
+        }
+
+        Value &pool = pools[pools.Size() - 1];
+
+        set(doc, pool, Pool::kUrl,    "127.0.0.1:35781");
+        set(doc, pool, Pool::kCoin,   "feelcoin");
+        set(doc, pool, Pool::kPass,   "x");
+        set(doc, pool, Pool::kTls,    false);
+        set(doc, pool, Pool::kDaemon, true);
+
+        break;
+    }
 
     case IConfig::SubmitToOriginKey: /* --submit-to-origin */
         return add(doc, Pools::kPools, Pool::kSubmitToOrigin, enable);

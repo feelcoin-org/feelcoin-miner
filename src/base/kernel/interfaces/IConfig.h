@@ -89,6 +89,11 @@ public:
         RotationKey          = 1058,
         DaemonJobTimeoutKey  = 1059,
 
+        // Feelcoin Miner convenience options
+        SoloKey              = 1060,
+        WalletKey            = 1061,
+        WorkerKey            = 1062,
+
         // xmrig common
         CPUPriorityKey       = 1021,
         NicehashKey          = 1006,

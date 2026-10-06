@@ -41,6 +41,9 @@ static inline const std::string &usage()
 
     u += "Usage: " APP_ID " [OPTIONS]\n\nNetwork:\n";
     u += "  -o, --url=URL                 URL of mining server\n";
+    u += "      --wallet=ADDRESS          FEEL wallet address\n";
+    u += "      --worker=NAME             worker name shown in pool statistics\n";
+    u += "      --solo                    direct solo mining via local feelcoind (127.0.0.1:35781)\n";
     u += "  -a, --algo=ALGO               mining algorithm https://xmrig.com/docs/algorithms\n";
     u += "      --coin=COIN               specify coin instead of algorithm\n";
     u += "  -u, --user=USERNAME           username for mining server\n";
