@@ -103,3 +103,121 @@ version 3 or later. See LICENSE.
 
 The Feelcoin Project does not claim authorship of upstream XMRig code or
 third-party components.
+
+
+## Install Feelcoin Miner
+
+The official prebuilt release currently targets **Linux x86_64** and was built and tested on Ubuntu 26.04.1.
+
+### Download the official release
+
+Download:
+
+- `feelcoin-miner-v0.1.0-linux-x64.tar.gz`
+- `feelcoin-miner-v0.1.0-linux-x64.sha256`
+
+from the official release:
+
+https://github.com/feelcoin-org/feelcoin-miner/releases/tag/v0.1.0
+
+Verify the download before running it:
+
+```bash
+sha256sum -c feelcoin-miner-v0.1.0-linux-x64.sha256
+```
+
+Published SHA-256:
+
+```text
+82881827d445eba6009b11f377e9c17aa9b0c2fd2b9a7e4378a5f8c28818615e
+```
+
+Extract and run:
+
+```bash
+tar -xzf feelcoin-miner-v0.1.0-linux-x64.tar.gz
+cd feelcoin-miner-v0.1.0-linux-x64
+chmod +x feelcoin-miner
+```
+
+### Pool mining
+
+```bash
+./feelcoin-miner \
+  --wallet YOUR_FEELCOIN_WALLET_ADDRESS \
+  --worker YOUR_WORKER_NAME
+```
+
+The native Feelcoin Miner uses the official TLS pool configuration by default.
+
+Official pool:
+
+```text
+pool.feelcoin.org:4244
+```
+
+### Direct solo mining
+
+Run a local `feelcoind` node first, keeping RPC bound to localhost.
+
+Then start:
+
+```bash
+./feelcoin-miner \
+  --solo \
+  --wallet YOUR_FEELCOIN_WALLET_ADDRESS
+```
+
+Direct daemon solo mining has **0% pool fee**.
+
+## Build from Source
+
+Install the build dependencies on Ubuntu:
+
+```bash
+sudo apt update
+sudo apt install -y \
+  git \
+  build-essential \
+  cmake \
+  libuv1-dev \
+  libssl-dev \
+  libhwloc-dev
+```
+
+Clone the repository:
+
+```bash
+git clone https://github.com/feelcoin-org/feelcoin-miner.git
+cd feelcoin-miner
+git checkout v0.1.0
+```
+
+Build the CPU miner:
+
+```bash
+mkdir -p build
+cd build
+
+cmake .. \
+  -DWITH_OPENCL=OFF \
+  -DWITH_CUDA=OFF
+
+make -j$(nproc)
+```
+
+Verify the binary:
+
+```bash
+./feelcoin-miner --version
+```
+
+## Transparency
+
+Feelcoin Miner is based on the open-source XMRig codebase and retains the applicable upstream attribution and GPLv3 licensing requirements.
+
+Feelcoin-specific additions include native FEEL wallet validation, Feelcoin pool defaults, direct daemon solo mining support and Feelcoin block-template handling.
+
+The default upstream donation level is **0%**.
+
+There is no hidden automatic developer fee in Feelcoin Miner.
