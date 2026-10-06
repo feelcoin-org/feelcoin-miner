@@ -8,17 +8,17 @@
 #ifndef XMRIG_VERSION_H
 #define XMRIG_VERSION_H
 
-#define APP_ID        "xmrig"
-#define APP_NAME      "XMRig"
-#define APP_DESC      "XMRig miner"
-#define APP_VERSION   "6.26.0"
-#define APP_DOMAIN    "xmrig.com"
-#define APP_SITE      "www.xmrig.com"
-#define APP_COPYRIGHT "Copyright (C) 2016-2026 xmrig.com"
+#define APP_ID        "feelcoin-miner"
+#define APP_NAME      "Feelcoin Miner"
+#define APP_DESC      "Feelcoin RandomX miner"
+#define APP_VERSION   "0.1.0"
+#define APP_DOMAIN    "feelcoin.org"
+#define APP_SITE      "feelcoin.org"
+#define APP_COPYRIGHT "Copyright (C) 2026 Feelcoin Project; based on XMRig"
 #define APP_KIND      "miner"
 
-#define APP_VER_MAJOR  6
-#define APP_VER_MINOR  26
+#define APP_VER_MAJOR  0
+#define APP_VER_MINOR  1
 #define APP_VER_PATCH  0
 
 #ifdef _MSC_VER
