@@ -17,6 +17,7 @@
  */
 
 #include <cstdio>
+#include <cstdlib>
 
 #ifdef _MSC_VER
 #   include "getopt/getopt.h"
@@ -33,6 +34,7 @@
 #include "base/net/dns/DnsConfig.h"
 #include "base/net/stratum/Pool.h"
 #include "base/net/stratum/Pools.h"
+#include "base/tools/cryptonote/WalletAddress.h"
 #include "core/config/Config_platform.h"
 
 #ifdef XMRIG_FEATURE_TLS
@@ -174,6 +176,38 @@ void xmrig::BaseTransform::transform(rapidjson::Document &doc, int key, const ch
     case IConfig::WalletKey: /* --wallet */
     {
         using namespace rapidjson;
+
+        /*
+         * Feelcoin mainnet CryptoNote address prefixes:
+         *
+         *   84 = standard address
+         *   85 = integrated address
+         *   86 = subaddress
+         *
+         * WalletAddress::decode() verifies Base58 structure
+         * and the CryptoNote checksum before exposing tag().
+         */
+        const WalletAddress wallet(arg);
+
+        if (!wallet.isValid()) {
+            std::fprintf(
+                stderr,
+                "ERROR: invalid FEEL wallet address: malformed Base58 data or checksum.\n"
+            );
+            std::exit(EXIT_FAILURE);
+        }
+
+        const uint64_t tag = wallet.tag();
+
+        if (tag != 84 && tag != 85 && tag != 86) {
+            std::fprintf(
+                stderr,
+                "ERROR: wallet address is not compatible with Feelcoin mainnet "
+                "(expected prefix 84, 85 or 86; decoded prefix: %llu).\n",
+                static_cast<unsigned long long>(tag)
+            );
+            std::exit(EXIT_FAILURE);
+        }
 
         if (!doc.HasMember(Pools::kPools)) {
             doc.AddMember(StringRef(Pools::kPools), kArrayType, doc.GetAllocator());
