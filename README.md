@@ -1,5 +1,9 @@
 # Feelcoin Miner
 
+<p align="center">
+  <a href="https://feelcoin.org"><img src="https://feelcoin.org/assets/feelcoin-logo-v2.png" alt="Official Feelcoin logo" width="144"></a>
+</p>
+
 Official CPU miner for **Feelcoin (FEEL)**.
 
 **In Feels We Trust.**
